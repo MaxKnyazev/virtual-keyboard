@@ -156,6 +156,29 @@ body {
     // color: var(--color-key-fn);
     background-color:var(--color-key-press) !important;
   }
+  
+  &:hover {
+    background-color:var(--color-key-hover);
+  }
+}
+
+.btn {
+  box-shadow: 1px 1px 3px var(--color-key-fn);
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-color: var(--color-key);
+  color: var(--color-light-font);
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  // padding: 0 5px;
+  // margin: 10px;
+  transition: all 100ms linear;
+  user-select: none;  
+
 
   &__lang {
     background-color: var(--color-title);
@@ -163,10 +186,6 @@ body {
     &--active {
       background-color: var(--color-key-press);
     }
-  }
-  
-  &:hover {
-    background-color:var(--color-key-hover);
   }
 }
 

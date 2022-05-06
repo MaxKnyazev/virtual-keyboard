@@ -8,6 +8,10 @@ import ru from './data/ru.js';
 
 console.log('App started...');
 
+let isCaps = false;
+let isShift = false;
+const keyboardButtons = document.querySelectorAll('.key');
+console.log(keyboardButtons);
 const btnRu = document.querySelector('.ru');
 const btnEn = document.querySelector('.en');
 const textarea = document.querySelector('.textarea');
@@ -21,8 +25,8 @@ switch (localStorage.getItem('language')) {
     break;
   case 'ru':
     keyArr = ru;
-    btnEn.classList.toggle('key__lang--active');
-    btnRu.classList.toggle('key__lang--active');
+    btnEn.classList.toggle('btn__lang--active');
+    btnRu.classList.toggle('btn__lang--active');
     break;
 
   default:
@@ -55,16 +59,16 @@ console.log(keyMap);
 btnEn.addEventListener('click', () => {
   if (localStorage.getItem('language') !== 'en') {
     localStorage.setItem('language', 'en');
-    btnEn.classList.toggle('key__lang--active');
-    btnRu.classList.toggle('key__lang--active');
+    btnEn.classList.toggle('btn__lang--active');
+    btnRu.classList.toggle('btn__lang--active');
   }
 });
 
 btnRu.addEventListener('click', () => {
   if (localStorage.getItem('language') !== 'ru') {
     localStorage.setItem('language', 'ru');
-    btnEn.classList.toggle('key__lang--active');
-    btnRu.classList.toggle('key__lang--active');
+    btnEn.classList.toggle('btn__lang--active');
+    btnRu.classList.toggle('btn__lang--active');
   }
 });
 
@@ -143,6 +147,31 @@ document.addEventListener('keydown', (event) => {
 
     case 'CapsLock':
       currentKey.classList.toggle('key--press');
+      keyboardButtons.forEach((elem) => {
+        const keyboardBtn = elem;
+        if (keyArr[keyboardBtn.dataset.index].caps) {
+          if (!isCaps) {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+          } else {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+          }
+        }
+      });
+      isCaps = !isCaps;
+      break;
+
+    case 'Shift':
+      keyboardButtons.forEach((elem) => {
+        const keyboardBtn = elem;
+        if (keyArr[keyboardBtn.dataset.index].shift) {
+          if (!isCaps) {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shift;
+          } else {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shiftCaps;
+          }
+        }
+      });
+      isShift = true;
       break;
 
     case 'Control':
@@ -152,7 +181,16 @@ document.addEventListener('keydown', (event) => {
 
     default:
       textPosition = textarea.selectionStart;
-      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.innerHTML.slice(textPosition)}`;
+      if (event.shiftKey && isCaps) {
+        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.innerHTML.slice(textPosition)}`;
+      } else if (event.shiftKey) {
+        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.innerHTML.slice(textPosition)}`;
+      } else if (isCaps) {
+        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.innerHTML.slice(textPosition)}`;
+      } else {
+        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.innerHTML.slice(textPosition)}`;
+      }
+
       textPosition += 1;
       textarea.selectionStart = textPosition;
   }
@@ -168,8 +206,8 @@ document.addEventListener('keydown', (event) => {
     } else {
       localStorage.setItem('language', 'ru');
     }
-    btnEn.classList.toggle('key__lang--active');
-    btnRu.classList.toggle('key__lang--active');
+    btnEn.classList.toggle('btn__lang--active');
+    btnRu.classList.toggle('btn__lang--active');
   }
 });
 
@@ -185,6 +223,21 @@ document.addEventListener('keyup', (event) => {
   // }
   const currentKey = keyMap.get(event.code);
   // currentKey.classList.toggle('key--press');
+
+  if (event.key === 'Shift') {
+    keyboardButtons.forEach((elem) => {
+      const keyboardBtn = elem;
+      if (keyArr[keyboardBtn.dataset.index].shift) {
+        if (!isCaps) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+        } else {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+        }
+      }
+    });
+    isShift = false;
+  }
+
   if (event.key !== 'CapsLock') {
     currentKey.classList.remove('key--press');
   }
