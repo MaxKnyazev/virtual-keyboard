@@ -142,11 +142,11 @@ body {
     width: 110px;
   }
 
-  &__down {
+  &__down > span {
     transform: rotate(90deg);
   }
 
-  &__up {
+  &__up > span {
     transform: rotate(90deg);
   }
   

@@ -146,12 +146,12 @@ body {
   width: 110px;
 }
 
-.key__down {
+.key__down > span {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
 
-.key__up {
+.key__up > span {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
 }
