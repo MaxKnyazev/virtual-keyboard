@@ -1,22 +1,14 @@
 {
-  "name": "virtual-keyboard",
+  "name": "test-v-keyboard",
   "version": "1.0.0",
-  "description": "virtual-keyboard",
-  "main": "index.js",
+  "description": "",
+  "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MaxKnyazev/virtual-keyboard.git"
-  },
   "keywords": [],
-  "author": "MaxKnyazev",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MaxKnyazev/virtual-keyboard/issues"
-  },
-  "homepage": "https://github.com/MaxKnyazev/virtual-keyboard#readme",
   "devDependencies": {
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
