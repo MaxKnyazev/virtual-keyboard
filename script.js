@@ -61,6 +61,22 @@ btnEn.addEventListener('click', () => {
     localStorage.setItem('language', 'en');
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
+    keyArr = en;
+
+    keyboardButtons.forEach((elem) => {
+      const keyboardBtn = elem;
+      if (keyArr[keyboardBtn.dataset.index].caps) {
+        if (!isCaps && !isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+        } else if (isCaps && isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shiftCaps;
+        } else if (isCaps && !isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+        } else if (!isCaps && isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shift;
+        }
+      }
+    });
   }
 });
 
@@ -70,6 +86,22 @@ btnRu.addEventListener('click', () => {
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
   }
+  keyArr = ru;
+
+  keyboardButtons.forEach((elem) => {
+    const keyboardBtn = elem;
+    if (keyArr[keyboardBtn.dataset.index].caps) {
+      if (!isCaps && !isShift) {
+        keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+      } else if (isCaps && isShift) {
+        keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shiftCaps;
+      } else if (isCaps && !isShift) {
+        keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+      } else if (!isCaps && isShift) {
+        keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shift;
+      }
+    }
+  });
 });
 
 let textPosition = 0;
@@ -88,7 +120,10 @@ document.addEventListener('keydown', (event) => {
 
   switch (event.key) {
     case 'Tab':
-      textarea.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;';
+      textPosition = textarea.selectionStart;
+      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}    ${textarea.innerHTML.slice(textPosition)}`;
+      textPosition += 4;
+      textarea.selectionStart = textPosition;
       break;
 
     case 'Backspace':
@@ -151,9 +186,17 @@ document.addEventListener('keydown', (event) => {
         const keyboardBtn = elem;
         if (keyArr[keyboardBtn.dataset.index].caps) {
           if (!isCaps) {
-            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+            if (!isShift) {
+              keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+            } else {
+              keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shiftCaps;
+            }
           } else {
-            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+            if (!isShift) {
+              keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+            } else {
+              keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shift;
+            }
           }
         }
       });
@@ -203,9 +246,25 @@ document.addEventListener('keydown', (event) => {
   if (event.altKey && event.ctrlKey) {
     if (localStorage.getItem('language') === 'ru') {
       localStorage.setItem('language', 'en');
+      keyArr = en;
     } else {
       localStorage.setItem('language', 'ru');
+      keyArr = ru;
     }
+    keyboardButtons.forEach((elem) => {
+      const keyboardBtn = elem;
+      if (keyArr[keyboardBtn.dataset.index].caps) {
+        if (!isCaps && !isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+        } else if (isCaps && isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shiftCaps;
+        } else if (isCaps && !isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+        } else if (!isCaps && isShift) {
+          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].shift;
+        }
+      }
+    });
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
   }
