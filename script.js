@@ -1,22 +1,5 @@
-/* eslint-disable import/extensions */
-/* eslint linebreak-style: ["error", "windows"] */
-/* eslint-disable no-console */
-/* eslint-disable no-undef */
-
 import en from './data/en.js';
 import ru from './data/ru.js';
-
-console.log('App started...');
-
-let isCaps = false;
-let isShift = false;
-const keyboardButtons = document.querySelectorAll('.key');
-console.log(keyboardButtons);
-const btnRu = document.querySelector('.ru');
-const btnEn = document.querySelector('.en');
-const textarea = document.querySelector('.textarea');
-console.dir(textarea);
-console.log(textarea.selectionStart);
 
 let keyArr;
 switch (localStorage.getItem('language')) {
@@ -25,20 +8,99 @@ switch (localStorage.getItem('language')) {
     break;
   case 'ru':
     keyArr = ru;
-    btnEn.classList.toggle('btn__lang--active');
-    btnRu.classList.toggle('btn__lang--active');
     break;
   default:
     keyArr = en;
-    localStorage.setItem('language', 'en');
 }
 
+const render = () => {
+  const body = document.querySelector('body');
+  const main = document.createElement('main');
+  main.classList.add('main');
+
+  const sectionTitle = document.createElement('section');
+  sectionTitle.classList.add('title');
+  const titleSchool = document.createElement('div');
+  titleSchool.classList.add('title__school');
+  titleSchool.innerHTML = 'RSSchool';
+  const titleTask = document.createElement('h1');
+  titleTask.classList.add('title__task');
+  titleTask.innerHTML = 'Виртуальная клавиатура';
+  sectionTitle.appendChild(titleSchool);
+  sectionTitle.appendChild(titleTask);
+  const sectionTextArea = document.createElement('section');
+  sectionTextArea.classList.add('textarea__wrapper');
+  sectionTextArea.innerHTML = '<textarea autofocus class="textarea" rows="7" cols="50"></textarea>';
+
+  const sectionKeyboard = document.createElement('section');
+  sectionKeyboard.classList.add('keyboard');
+  for (let i = 0; i < keyArr.length; i += 1) {
+    const key = document.createElement('div');
+    key.className = keyArr[i].classes.join(' ');
+    key.dataset.keycode = keyArr[i].keycode;
+    key.dataset.index = i;
+    const keySpan = document.createElement('span');
+    keySpan.innerHTML = keyArr[i].title;
+    key.appendChild(keySpan);
+    sectionKeyboard.appendChild(key);
+  }
+
+  const sectionDescription = document.createElement('section');
+  sectionDescription.classList.add('description');
+  const descriptionInfo = document.createElement('div');
+  descriptionInfo.classList.add('description__info');
+  const descriptionTitle = document.createElement('h2');
+  descriptionTitle.classList.add('description__title');
+  descriptionTitle.innerHTML = 'Описание :';
+  descriptionInfo.appendChild(descriptionTitle);
+  descriptionInfo.innerHTML += `
+    <div class="description__text">Создана в ОС <b>Windows</b></div>
+    <div class="description__text">Переключение языка : <b>Ctrl + Alt</b></div>
+  `;
+  const descriptionLang = document.createElement('div');
+  descriptionLang.classList.add('description__lang');
+  const btnLangEn = document.createElement('div');
+  btnLangEn.className = 'btn btn__lang en';
+  if (localStorage.getItem('language') === 'en') {
+    btnLangEn.classList.add('btn__lang--active');
+  }
+  btnLangEn.dataset.keycode = '';
+  const spanEn = document.createElement('span');
+  spanEn.innerHTML = 'En';
+  btnLangEn.appendChild(spanEn);
+  const btnLangRu = document.createElement('div');
+  btnLangRu.className = 'btn btn__lang ru';
+  if (localStorage.getItem('language') === 'ru') {
+    btnLangRu.classList.add('btn__lang--active');
+  }
+  btnLangRu.dataset.keycode = '';
+  const spanRu = document.createElement('span');
+  spanRu.innerHTML = 'Ru';
+  btnLangRu.appendChild(spanRu);
+  descriptionLang.appendChild(btnLangEn);
+  descriptionLang.appendChild(btnLangRu);
+  sectionDescription.appendChild(descriptionInfo);
+  sectionDescription.appendChild(descriptionLang);
+  main.appendChild(sectionTitle);
+  main.appendChild(sectionTextArea);
+  main.appendChild(sectionKeyboard);
+  main.appendChild(sectionDescription);
+  body.appendChild(main);
+};
+
+render();
+
+let isCaps = false;
+let isShift = false;
+const keyboardButtons = document.querySelectorAll('.key');
+const btnRu = document.querySelector('.ru');
+const btnEn = document.querySelector('.en');
+const textarea = document.querySelector('.textarea');
+
 const keyMap = new Map();
-// eslint-disable-next-line no-restricted-syntax
 for (const elem of keyArr) {
   keyMap.set(elem.keycode, document.querySelector(`[data-keycode='${elem.keycode}']`));
 }
-console.log(keyMap);
 
 textarea.addEventListener('blur', () => {
   textarea.focus();
@@ -73,7 +135,6 @@ btnRu.addEventListener('click', () => {
     localStorage.setItem('language', 'ru');
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
-
     keyArr = ru;
 
     keyboardButtons.forEach((elem) => {
@@ -124,7 +185,7 @@ document.addEventListener('keydown', (event) => {
       break;
 
     case 'Enter':
-      textarea.innerHTML += '\n';
+      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}\n${textarea.innerHTML.slice(textPosition)}`;
       textPosition += 1;
       textarea.selectionStart = textPosition;
       break;
@@ -135,7 +196,6 @@ document.addEventListener('keydown', (event) => {
         textarea.selectionStart = textPosition;
         textarea.selectionEnd = textPosition;
       }
-      console.dir(textarea);
       break;
 
     case 'ArrowRight':
@@ -144,7 +204,6 @@ document.addEventListener('keydown', (event) => {
         textarea.selectionStart = textPosition;
         textarea.selectionEnd = textPosition;
       }
-      console.dir(textarea);
       break;
 
     case 'ArrowUp':
@@ -196,6 +255,21 @@ document.addEventListener('keydown', (event) => {
       isShift = true;
       break;
 
+    case 'F5':
+      window.location.reload();
+      break;
+
+    case 'F1':
+    case 'F2':
+    case 'F3':
+    case 'F4':
+    case 'F6':
+    case 'F7':
+    case 'F8':
+    case 'F9':
+    case 'F10':
+    case 'F11':
+    case 'F12':
     case 'Control':
     case 'Alt':
     case 'Meta':
@@ -203,9 +277,9 @@ document.addEventListener('keydown', (event) => {
 
     default:
       textPosition = textarea.selectionStart;
-      if (event.shiftKey && isCaps) {
+      if (isShift && isCaps) {
         textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.innerHTML.slice(textPosition)}`;
-      } else if (event.shiftKey) {
+      } else if (isShift) {
         textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.innerHTML.slice(textPosition)}`;
       } else if (isCaps) {
         textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.innerHTML.slice(textPosition)}`;
@@ -217,8 +291,10 @@ document.addEventListener('keydown', (event) => {
       textarea.selectionStart = textPosition;
   }
 
-  if (event.key !== 'CapsLock') {
-    currentKey.classList.add('key--press');
+  if (currentKey) {
+    if (event.key !== 'CapsLock') {
+      currentKey.classList.add('key--press');
+    }
   }
 
   if (event.altKey && event.ctrlKey) {
@@ -265,19 +341,17 @@ document.addEventListener('keyup', (event) => {
     });
     isShift = false;
   }
-
-  if (event.key !== 'CapsLock') {
-    currentKey.classList.remove('key--press');
+  if (currentKey) {
+    if (event.key !== 'CapsLock') {
+      currentKey.classList.remove('key--press');
+    }
   }
 });
 
-// --------------------------------------------------------------------------  MOUSEDOWN
 document.addEventListener('mousedown', (event) => {
-  // event.preventDefault();
   const { keycode } = event.target.parentNode.dataset;
   const currentKey = keyMap.get(keycode);
   if (event.target.tagName === 'SPAN' && keycode) {
-    console.log(`keycode === ${keycode}`);
     if (keycode !== 'CapsLock') {
       currentKey.classList.add('key--press');
     }
@@ -308,7 +382,7 @@ document.addEventListener('mousedown', (event) => {
         break;
 
       case 'Enter':
-        textarea.innerHTML += '\n';
+        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}\n${textarea.innerHTML.slice(textPosition)}`;
         textPosition += 1;
         textarea.selectionStart = textPosition;
         break;
@@ -319,7 +393,6 @@ document.addEventListener('mousedown', (event) => {
           textarea.selectionStart = textPosition;
           textarea.selectionEnd = textPosition;
         }
-        console.dir(textarea);
         break;
 
       case 'ArrowRight':
@@ -328,7 +401,6 @@ document.addEventListener('mousedown', (event) => {
           textarea.selectionStart = textPosition;
           textarea.selectionEnd = textPosition;
         }
-        console.dir(textarea);
         break;
 
       case 'ArrowUp':
@@ -391,9 +463,9 @@ document.addEventListener('mousedown', (event) => {
 
       default:
         textPosition = textarea.selectionStart;
-        if (event.shiftKey && isCaps) {
+        if (isShift && isCaps) {
           textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.innerHTML.slice(textPosition)}`;
-        } else if (event.shiftKey) {
+        } else if (isShift) {
           textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.innerHTML.slice(textPosition)}`;
         } else if (isCaps) {
           textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.innerHTML.slice(textPosition)}`;
@@ -407,26 +479,27 @@ document.addEventListener('mousedown', (event) => {
   }
 });
 
-// --------------------------------------------------------------------------  MOUSEUP
 document.addEventListener('mouseup', (event) => {
   const { keycode } = event.target.parentNode.dataset;
   const currentKey = keyMap.get(keycode);
 
-  if ((keycode === 'ShiftLeft') || (keycode === 'ShiftRight')) {
-    keyboardButtons.forEach((elem) => {
-      const keyboardBtn = elem;
-      if (keyArr[keyboardBtn.dataset.index].shift) {
-        if (!isCaps) {
-          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
-        } else {
-          keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+  if (keycode) {
+    if ((keycode === 'ShiftLeft') || (keycode === 'ShiftRight')) {
+      keyboardButtons.forEach((elem) => {
+        const keyboardBtn = elem;
+        if (keyArr[keyboardBtn.dataset.index].shift) {
+          if (!isCaps) {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].value;
+          } else {
+            keyboardBtn.children[0].innerHTML = keyArr[keyboardBtn.dataset.index].caps;
+          }
         }
-      }
-    });
-    isShift = false;
-  }
+      });
+      isShift = false;
+    }
 
-  if (keycode !== 'CapsLock') {
-    currentKey.classList.remove('key--press');
+    if (keycode !== 'CapsLock') {
+      currentKey.classList.remove('key--press');
+    }
   }
 });

@@ -1,11 +1,3 @@
-// @font-face {
-//   font-family: 'Roboto';
-//   src: url('./assets/fonts/Roboto-Regular.woff2') format('woff2');
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: swap;
-// }
-
 .red {
   color: red;
 }
@@ -54,8 +46,6 @@ body {
 
 }
 
-//------------------------------------  TITLE  ---------------------------------
-
 .title {
   width: 100%;
   display: flex;
@@ -75,7 +65,6 @@ body {
   }
 }
 
-//------------------------------------  TEXTAREA  ---------------------------------
 .textarea__wrapper {
   width: 100%;
 }
@@ -90,7 +79,6 @@ body {
   border-radius: 5px;
 }
 
-//------------------------------------  KEYBOARD  ---------------------------------
 .keyboard {
   width: 100%;
   height: 314px;
@@ -103,11 +91,6 @@ body {
   flex-wrap: wrap;
 }
 
-// .row {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
 .key {
   box-shadow: 1px 1px 3px var(--color-key-fn);
   width: 50px;
@@ -115,13 +98,8 @@ body {
   display: inline-block;
   background-color: var(--color-key);
   color: var(--color-light-font);
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  // padding: 0 5px;
-  // margin: 10px;
   transition: all 100ms linear;
   user-select: none;  
   
@@ -152,8 +130,6 @@ body {
   
   &--press {
     box-shadow: none !important;
-    // border-radius: 15px;
-    // color: var(--color-key-fn);
     background-color:var(--color-key-press) !important;
   }
   
@@ -169,19 +145,15 @@ body {
   display: inline-block;
   background-color: var(--color-key);
   color: var(--color-light-font);
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  // padding: 0 5px;
-  // margin: 10px;
   transition: all 100ms linear;
   user-select: none;  
 
 
   &__lang {
     background-color: var(--color-title);
+    margin-left: 10px;
 
     &--active {
       background-color: var(--color-key-press);
@@ -191,18 +163,13 @@ body {
 
 span {
   width: 100%;
-  // height: 50%;
   height: 100%;
   display: flex;
-  // justify-content: left;
   justify-content: center;
   align-items: center;
   font-size: 24px;
   font-weight: 400;
-  
 }
-
-//------------------------------------  DESCRIPTION  ---------------------------------
 
 .description {
   width: 100%;

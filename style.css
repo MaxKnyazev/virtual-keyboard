@@ -186,6 +186,7 @@ body {
 
 .btn__lang {
   background-color: var(--color-title);
+  margin-left: 10px;
 }
 
 .btn__lang--active {
