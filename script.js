@@ -112,7 +112,6 @@ btnEn.addEventListener('click', () => {
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
     keyArr = en;
-
     keyboardButtons.forEach((elem) => {
       const keyboardBtn = elem;
       if (keyArr[keyboardBtn.dataset.index].caps) {
@@ -136,7 +135,6 @@ btnRu.addEventListener('click', () => {
     btnEn.classList.toggle('btn__lang--active');
     btnRu.classList.toggle('btn__lang--active');
     keyArr = ru;
-
     keyboardButtons.forEach((elem) => {
       const keyboardBtn = elem;
       if (keyArr[keyboardBtn.dataset.index].caps) {
@@ -162,7 +160,7 @@ document.addEventListener('keydown', (event) => {
   switch (event.key) {
     case 'Tab':
       textPosition = textarea.selectionStart;
-      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}    ${textarea.innerHTML.slice(textPosition)}`;
+      textarea.textContent = `${textarea.textContent.slice(0, textPosition)}    ${textarea.textContent.slice(textPosition)}`;
       textPosition += 4;
       textarea.selectionStart = textPosition;
       break;
@@ -170,7 +168,7 @@ document.addEventListener('keydown', (event) => {
     case 'Backspace':
       textPosition = textarea.selectionStart;
       if (textPosition > 0) {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition - 1)}${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition - 1)}${textarea.textContent.slice(textPosition)}`;
         textPosition -= 1;
         textarea.selectionStart = textPosition;
       }
@@ -179,13 +177,14 @@ document.addEventListener('keydown', (event) => {
     case 'Delete':
       textPosition = textarea.selectionStart;
       if (textPosition < textarea.textLength) {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${textarea.innerHTML.slice(textPosition + 1)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${textarea.textContent.slice(textPosition + 1)}`;
         textarea.selectionStart = textPosition;
       }
       break;
 
     case 'Enter':
-      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}\n${textarea.innerHTML.slice(textPosition)}`;
+      textPosition = textarea.selectionStart;
+      textarea.textContent = `${textarea.textContent.slice(0, textPosition)}\n${textarea.textContent.slice(textPosition)}`;
       textPosition += 1;
       textarea.selectionStart = textPosition;
       break;
@@ -208,14 +207,14 @@ document.addEventListener('keydown', (event) => {
 
     case 'ArrowUp':
       textPosition = textarea.selectionStart;
-      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}&uarr;${textarea.innerHTML.slice(textPosition)}`;
+      textarea.textContent = `${textarea.textContent.slice(0, textPosition)}↑${textarea.textContent.slice(textPosition)}`;
       textPosition += 1;
       textarea.selectionStart = textPosition;
       break;
 
     case 'ArrowDown':
       textPosition = textarea.selectionStart;
-      textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}&darr;${textarea.innerHTML.slice(textPosition)}`;
+      textarea.textContent = `${textarea.textContent.slice(0, textPosition)}↓${textarea.textContent.slice(textPosition)}`;
       textPosition += 1;
       textarea.selectionStart = textPosition;
       break;
@@ -278,13 +277,13 @@ document.addEventListener('keydown', (event) => {
     default:
       textPosition = textarea.selectionStart;
       if (isShift && isCaps) {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.textContent.slice(textPosition)}`;
       } else if (isShift) {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.textContent.slice(textPosition)}`;
       } else if (isCaps) {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.textContent.slice(textPosition)}`;
       } else {
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.textContent.slice(textPosition)}`;
       }
 
       textPosition += 1;
@@ -359,7 +358,7 @@ document.addEventListener('mousedown', (event) => {
     switch (keycode) {
       case 'Tab':
         textPosition = textarea.selectionStart;
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}    ${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}    ${textarea.textContent.slice(textPosition)}`;
         textPosition += 4;
         textarea.selectionStart = textPosition;
         break;
@@ -367,7 +366,7 @@ document.addEventListener('mousedown', (event) => {
       case 'Backspace':
         textPosition = textarea.selectionStart;
         if (textPosition > 0) {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition - 1)}${textarea.innerHTML.slice(textPosition)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition - 1)}${textarea.textContent.slice(textPosition)}`;
           textPosition -= 1;
           textarea.selectionStart = textPosition;
         }
@@ -376,13 +375,14 @@ document.addEventListener('mousedown', (event) => {
       case 'Delete':
         textPosition = textarea.selectionStart;
         if (textPosition < textarea.textLength) {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${textarea.innerHTML.slice(textPosition + 1)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${textarea.textContent.slice(textPosition + 1)}`;
           textarea.selectionStart = textPosition;
         }
         break;
 
       case 'Enter':
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}\n${textarea.innerHTML.slice(textPosition)}`;
+        textPosition = textarea.selectionStart;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}\n${textarea.textContent.slice(textPosition)}`;
         textPosition += 1;
         textarea.selectionStart = textPosition;
         break;
@@ -405,14 +405,14 @@ document.addEventListener('mousedown', (event) => {
 
       case 'ArrowUp':
         textPosition = textarea.selectionStart;
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}&uarr;${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}↑${textarea.textContent.slice(textPosition)}`;
         textPosition += 1;
         textarea.selectionStart = textPosition;
         break;
 
       case 'ArrowDown':
         textPosition = textarea.selectionStart;
-        textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}&darr;${textarea.innerHTML.slice(textPosition)}`;
+        textarea.textContent = `${textarea.textContent.slice(0, textPosition)}↓${textarea.textContent.slice(textPosition)}`;
         textPosition += 1;
         textarea.selectionStart = textPosition;
         break;
@@ -464,13 +464,13 @@ document.addEventListener('mousedown', (event) => {
       default:
         textPosition = textarea.selectionStart;
         if (isShift && isCaps) {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.innerHTML.slice(textPosition)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shiftCaps}${textarea.textContent.slice(textPosition)}`;
         } else if (isShift) {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.innerHTML.slice(textPosition)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].shift}${textarea.textContent.slice(textPosition)}`;
         } else if (isCaps) {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.innerHTML.slice(textPosition)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].caps}${textarea.textContent.slice(textPosition)}`;
         } else {
-          textarea.innerHTML = `${textarea.innerHTML.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.innerHTML.slice(textPosition)}`;
+          textarea.textContent = `${textarea.textContent.slice(0, textPosition)}${keyArr[currentKey.dataset.index].value}${textarea.textContent.slice(textPosition)}`;
         }
 
         textPosition += 1;
@@ -483,7 +483,7 @@ document.addEventListener('mouseup', (event) => {
   const { keycode } = event.target.parentNode.dataset;
   const currentKey = keyMap.get(keycode);
 
-  if (keycode) {
+  if (currentKey) {
     if ((keycode === 'ShiftLeft') || (keycode === 'ShiftRight')) {
       keyboardButtons.forEach((elem) => {
         const keyboardBtn = elem;
