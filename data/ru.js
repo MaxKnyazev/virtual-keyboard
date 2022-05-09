@@ -162,7 +162,7 @@ const ru = [
     keycode: 'Slash', title: '.', value: '.', shift: ',', caps: '.', shiftCaps: ',', classes: ['key'],
   },
   {
-    keycode: 'ArrowUp', title: '&lt;', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn', 'key__up'],
+    keycode: 'ArrowUp', title: '↑', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
   },
   {
     keycode: 'ShiftRight', title: 'Shift', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn', 'key__fn-big'],
@@ -184,13 +184,13 @@ const ru = [
     keycode: 'AltRight', title: 'Alt', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
   },
   {
-    keycode: 'ArrowLeft', title: '&lt;', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
+    keycode: 'ArrowLeft', title: '↑', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn', 'key__up'],
   },
   {
-    keycode: 'ArrowDown', title: '&gt;', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn', 'key__down'],
+    keycode: 'ArrowDown', title: '↓', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
   },
   {
-    keycode: 'ArrowRight', title: '&gt;', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
+    keycode: 'ArrowRight', title: '↓', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn', 'key__down'],
   },
   {
     keycode: 'ControlRight', title: 'Ctrl', value: '', shift: '', caps: '', shiftCaps: '', classes: ['key', 'key__fn'],
